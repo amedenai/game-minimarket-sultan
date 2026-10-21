@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Minimarket Sultan - Penghasilan Tambahan</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Fredoka',sans-serif;background:#0f172a;color:#fff;overflow:hidden;touch-action:none}
+#wrap{position:fixed;inset:0;display:flex;flex-direction:column;background:linear-gradient(180deg,#1e293b 0%, #0f172a 100%)}
+#topBar{display:flex;justify-content:space-between;padding:10px 12px;background:rgba(255,255,255,.06);border-bottom:2px solid rgba(255,255,255,.08);z-index:10}
+.stat{background:#fff;color:#0f172a;border-radius:14px;padding:6px 12px;font-weight:700;font-size:13px;display:flex;gap:6px;box-shadow:0 4px 0 #cbd5e1}
+.stat b{color:#16a34a}
+#shopArea{flex:1;position:relative;overflow:hidden;display:flex}
+#shelves{flex:1;padding:12px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;align-content:start;overflow-y:auto}
+.shelf{background:linear-gradient(180deg,#ffffff 0%, #f1f5f9 100%);border-radius:18px;padding:10px;color:#0f172a;box-shadow:0 8px 0 #cbd5e1;border:3px solid #fff}
+.shelf h4{font-size:12px;margin-bottom:6px;display:flex;justify-content:space-between}
+.shelf .items{display:flex;flex-wrap:wrap;gap:6px}
+.item{width:44px;height:44px;border-radius:12px;background:#f8fafc;border:2px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:22px;position:relative;cursor:pointer}
+.item .stock{position:absolute;bottom:-4px;right:-4px;background:#16a34a;color:#fff;font-size:10px;padding:1px 5px;border-radius:10px;border:2px solid #fff}
+.item.empty{opacity:.25;filter:grayscale(1)}
+#cashierArea{width:38%;max-width:320px;background:linear-gradient(180deg,#fff 0%, #f1f5f9 100%);border-left:4px solid #e2e8f0;display:flex;flex-direction:column}
+#cashierChar{height:160px;background:radial-gradient(ellipse at center top,#fef3c7 0%, #fde68a 40%, #fbbf24 100%);display:flex;flex-direction:column;align-items:center;justify-content:end;padding-bottom:8px;border-bottom:4px dashed #e2e8f0;position:relative;overflow:hidden}
+#cashierChar .girl{font-size:84px;animation:breathe 2.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.bubble{position:absolute;top:10px;left:10px;right:10px;background:#0f172a;color:#fff;padding:8px 12px;border-radius:16px 16px 16px 4px;font-size:12px;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+#queue{padding:8px;display:flex;gap:8px;overflow-x:auto}
+.cust{width:52px;height:52px;border-radius:16px;background:#fff;border:3px solid #e2e8f0;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;position:relative;box-shadow:0 4px 0 #cbd5e1}
+.cust.active{border-color:#facc15;box-shadow:0 0 0 4px rgba(250,204,21,.3), 0 4px 0 #eab308}
+.cust .want{position:absolute;top:-8px;right:-8px;background:#ef4444;color:#fff;font-size:10px;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;font-weight:700}
+#posBtn{margin:8px;background:#0f172a;color:#fff;border:none;border-radius:18px;padding:14px;font-weight:700;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 6px 0 #020617}
+#posModal{position:absolute;inset:0;z-index:30;background:rgba(15,23,42,.92);backdrop-filter:blur(12px);display:flex;flex-direction:column;padding:14px}
+.hidden{display:none!important}
+.posHeader{display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:10px}
+.posScreen{background:#0f172a;border:4px solid #334155;border-radius:20px;padding:12px;color:#22c55e;box-shadow:inset 0 0 20px rgba(34,197,94,.2)}
+.posScreen .line{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px dashed #334155;font-size:14px}
+.posScreen .total{display:flex;justify-content:space-between;font-size:20px;font-weight:700;color:#fff;margin-top:8px}
+.numpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+.numpad button{padding:16px;border-radius:16px;border:none;background:#fff;color:#0f172a;font-weight:700;font-size:20px;box-shadow:0 5px 0 #cbd5e1}
+.numpad .ok{background:#22c55e;color:#fff;box-shadow:0 5px 0 #15803d}
+.numpad .del{background:#ef4444;color:#fff;box-shadow:0 5px 0 #b91c1c}
+#stockModal{position:absolute;inset:0;z-index:25;background:rgba(255,255,255,.96);color:#0f172a;padding:14px;overflow-y:auto;display:flex;flex-direction:column}
+.stockGrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.stockCard{border:2px solid #e2e8f0;border-radius:16px;padding:10px;background:#fff}
+.btnBuy{margin-top:6px;width:100%;padding:8px;border:none;border-radius:10px;background:#0f172a;color:#fff;font-weight:700;font-size:12px}
+#bottomNav{display:flex;gap:8px;padding:10px;background:rgba(0,0,0,.3);border-top:2px solid rgba(255,255,255,.08);z-index:10}
+.navBtn{flex:1;padding:12px;border-radius:14px;border:none;background:rgba(255,255,255,.1);color:#fff;font-weight:700;font-size:12px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.navBtn.active{background:#fff;color:#0f172a;border-color:#fff}
+#menuStart{position:absolute;inset:0;z-index:40;background:linear-gradient(180deg,#0ea5e9 0%, #0369a1 30%, #0f172a 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center}
+#menuStart .logo{font-size:72px}
+#menuStart h1{font-size:36px;line-height:.9;margin:10px 0}
+#menuStart p{background:rgba(255,255,255,.15);padding:8px 16px;border-radius:20px;font-size:13px;margin:10px 0}
+.bigBtn{width:100%;max-width:340px;padding:16px;border-radius:18px;border:3px solid #fff;font-family:'Fredoka';font-weight:700;font-size:18px;margin:6px 0;box-shadow:0 8px 0 rgba(0,0,0,.3)}
+.primary{background:#facc15;color:#422006}
+.secondary{background:#fff;color:#0f172a}
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="topBar">
+<div class="stat">💰 Rp <b id="money">250.000</b></div>
+<div class="stat">📅 Hari <b id="day">1</b></div>
+<div class="stat">🎯 <b id="target">15</b> pembeli</div>
+</div>
+<div id="shopArea">
+<div id="shelves"></div>
+<div id="cashierArea">
+<div id="cashierChar">
+<div class="bubble" id="bubble">Hai Tuan! Aku Sinta, kasir cantik siap bantu! 😊</div>
+<div class="girl">👩‍💼</div>
+<div style="font-weight:700;color:#78350f;font-size:12px">SINTA - KASIR</div>
+</div>
+<div style="padding:8px 10px 0;font-size:11px;font-weight:700;color:#64748b;display:flex;justify-content:space-between"><span>ANTRIAN</span><span id="served">0/15</span></div>
+<div id="queue"></div>
+<button id="posBtn">🖥️ BUKA MESIN KASIR</button>
+<div style="padding:0 8px 8px;font-size:10px;color:#64748b">Tap barang di rak untuk cek stok</div>
+</div>
+<div id="posModal" class="hidden">
+<div class="posHeader"><h3>🖥️ POS KASIR - SINTA</h3><button onclick="closePOS()" style="background:rgba(255,255,255,.2);border:none;color:#fff;width:36px;height:36px;border-radius:50%">✕</button></div>
+<div class="posScreen" id="posList"><div style="opacity:.6;text-align:center;padding:20px">Belum ada barang</div></div>
+<div class="posScreen" style="margin-top:10px">
+<div style="display:flex;justify-content:space-between;font-size:12px;color:#94a3b8"><span>TOTAL</span><span>BAYAR</span><span>KEMBALIAN</span></div>
+<div class="total"><span id="posTotal">Rp 0</span><span id="posPay">Rp 0</span><span id="posChange" style="color:#facc15">Rp 0</span></div>
+<div style="margin-top:8px"><div style="font-size:11px;color:#94a3b8">UANG PELANGGAN: <b id="custMoney" style="color:#fff">Rp 0</b></div><input id="payInput" type="number" placeholder="Input uang bayar..." style="width:100%;margin-top:6px;padding:10px;border-radius:10px;border:2px solid #334155;background:#020617;color:#fff;font-weight:700;font-size:18px;text-align:center"></div>
+</div>
+<div class="numpad">
+<button onclick="pressNum('1')">1</button><button onclick="pressNum('2')">2</button><button onclick="pressNum('3')">3</button>
+<button onclick="pressNum('4')">4</button><button onclick="pressNum('5')">5</button><button onclick="pressNum('6')">6</button>
+<button onclick="pressNum('7')">7</button><button onclick="pressNum('8')">8</button><button onclick="pressNum('9')">9</button>
+<button class="del" onclick="pressDel()">⌫</button><button onclick="pressNum('0')">0</button><button class="ok" onclick="doPay()">BAYAR ✅</button>
+</div>
+</div>
+<div id="stockModal" class="hidden">
+<div style="display:flex;justify-content:space-between;align-items:center"><h2>📦 Gudang - Kulakan</h2><button onclick="closeStock()" style="background:#0f172a;color:#fff;border:none;width:36px;height:36px;border-radius:50%">✕</button></div>
+<p style="font-size:12px;color:#64748b;margin:6px 0">Beli stok biar rak tidak kosong! Beli murah jual mahal = untung!</p>
+<div class="stockGrid" id="stockGrid"></div>
+</div>
+</div>
+<div id="bottomNav">
+<button class="navBtn active">🏪<span>TOKO</span></button>
+<button class="navBtn" onclick="openStock()">📦<span>GUDANG</span></button>
+<button class="navBtn" onclick="alert('Upgrade segera hadir!')">⬆️<span>UPGRADE</span></button>
+<button class="navBtn" onclick="showReport()">📊<span>LAPORAN</span></button>
+</div>
+<div id="menuStart">
+<div class="logo">🏪💰</div>
+<h1>MINIMARKET<br>SULTAN</h1>
+<p>💵 Game Penghasilan Tambahan • Jadi Bos Minimarket!</p>
+<div style="background:#fff;color:#0f172a;border-radius:18px;padding:14px;width:100%;max-width:340px;text-align:left;margin:10px 0">
+<h3 style="color:#16a34a">✨ Full Fitur:</h3>
+<p style="font-size:13px;line-height:1.5;margin-top:6px">👩‍💼 Kasir Cewek Cantik Sinta<br>🖥️ Mesin Kasir Lengkap + Struk<br>🛒 24 Barang Minimarket Asli<br>📦 Sistem Kulakan & Stok<br>👥 Antrian Pelanggan Real<br>💰 Hitung Kembalian Beneran<br>📈 Naik Level & Buka Cabang</p>
+</div>
+<button class="bigBtn primary" onclick="startGame()">▶️ MULAI JUALAN!</button>
+<button class="bigBtn secondary" onclick="alert('Cara Main: Pelanggan datang → Klik pelanggan → Buka Mesin Kasir → Input uang bayar → Hitung kembalian → Dapat untung! Kalau stok habis buka Gudang!')">❓ CARA MAIN</button>
+<p style="font-size:10px;opacity:.6;margin-top:10px">Made for Tuan Amedenai • Minimarket v1</p>
+</div>
+</div>
+<script>
+const PRODUCTS=[
+{id:'aqua',name:'Aqua 600ml',icon:'💧',buy:2500,sell:4000,cat:'Minuman'},
+{id:'teh',name:'Teh Pucuk',icon:'🍵',buy:3000,sell:5000,cat:'Minuman'},
+{id:'kopi',name:'Kopi ABC',icon:'☕',buy:3500,sell:6000,cat:'Minuman'},
+{id:'susu',name:'Indomilk',icon:'🥛',buy:4000,sell:6500,cat:'Minuman'},
+{id:'soda',name:'Coca Cola',icon:'🥤',buy:4000,sell:7000,cat:'Minuman'},
+{id:'mizone',name:'Mizone',icon:'💦',buy:3000,sell:5500,cat:'Minuman'},
+{id:'chitato',name:'Chitato',icon:'🥔',buy:5000,sell:8500,cat:'Snack'},
+{id:'taro',name:'Taro Net',icon:'🍘',buy:4000,sell:7000,cat:'Snack'},
+{id:'beng',name:'Beng-Beng',icon:'🍫',buy:2000,sell:3500,cat:'Snack'},
+{id:'silver',name:'Silverqueen',icon:'🍫',buy:8000,sell:13500,cat:'Snack'},
+{id:'indomie',name:'Indomie Goreng',icon:'🍜',buy:2500,sell:4000,cat:'Makanan'},
+{id:'sari',name:'Sari Roti',icon:'🍞',buy:5000,sell:8000,cat:'Makanan'},
+{id:'beras',name:'Beras 1kg',icon:'🍚',buy:11000,sell:15000,cat:'Sembako'},
+{id:'minyak',name:'Minyak Goreng',icon:'🫒',buy:14000,sell:19000,cat:'Sembako'},
+{id:'gula',name:'Gula 1kg',icon:'🧂',buy:12000,sell:16000,cat:'Sembako'},
+{id:'sabun',name:'Sabun Lifebuoy',icon:'🧼',buy:3000,sell:5000,cat:'Sabun'},
+{id:'shampoo',name:'Shampoo Pantene',icon:'🧴',buy:6000,sell:10000,cat:'Sabun'},
+{id:'pepsodent',name:'Pepsodent',icon:'🪥',buy:7000,sell:11500,cat:'Sabun'},
+{id:'rokok',name:'Sampoerna Mild',icon:'🚬',buy:18000,sell:24000,cat:'Rokok'},
+{id:'tissue',name:'Tissue Paseo',icon:'🧻',buy:5000,sell:8500,cat:'Lain'},
+{id:'pulsa',name:'Pulsa 10k',icon:'📱',buy:10000,sell:12000,cat:'Digital'},
+{id:'token',name:'Token Listrik',icon:'💡',buy:20000,sell:22000,cat:'Digital'},
+{id:'kopiHitam',name:'Kopi Kapal Api',icon:'☕',buy:3500,sell:6000,cat:'Minuman'},
+{id:'yakult',name:'Yakult',icon:'🥛',buy:2000,sell:3500,cat:'Minuman'},
+];
+let state={money:250000,day:1,served:0,target:15,stock:{},queue:[],currentCust:null,total:0,level:1};
+function initStock(){PRODUCTS.forEach(p=>{state.stock[p.id]=Math.floor(Math.random()*4)+6;});}
+function renderShelves(){
+let catGroups={};PRODUCTS.forEach(p=>{if(!catGroups[p.cat])catGroups[p.cat]=[];catGroups[p.cat].push(p);});
+let html='';for(let cat in catGroups){html+=`<div class="shelf"><h4>📁 ${cat}</h4><div class="items">`;catGroups[cat].forEach(prod=>{let s=state.stock[prod.id]||0;html+=`<div class="item ${s==0?'empty':''}" onclick="showProd('${prod.id}')"><span>${prod.icon}</span><span class="stock">${s}</span></div>`;});html+=`</div></div>`;}
+document.getElementById('shelves').innerHTML=html;
+}
+function renderQueue(){
+let q=document.getElementById('queue');q.innerHTML='';state.queue.forEach((c,i)=>{let active=state.currentCust && state.currentCust.id===c.id;let div=document.createElement('div');div.className='cust'+(active?' active':'');div.innerHTML=`${c.avatar}<div class="want">${c.cart.length}</div>`;div.onclick=()=>selectCust(c.id);q.appendChild(div);});
+document.getElementById('served').textContent=`${state.served}/${state.target}`;
+}
+function spawnCust(){
+if(state.queue.length>=5)return;
+let prodCount=Math.floor(Math.random()*3)+1;
+let cart=[];for(let i=0;i<prodCount;i++){let p=PRODUCTS[Math.floor(Math.random()*PRODUCTS.length)];cart.push(p);}
+let avatars=['🧔','👩','👨‍🦱','👧','👦','👩‍🦰','👨‍🦳','🧕'];let cust={id:Date.now()+Math.random(),avatar:avatars[Math.floor(Math.random()*avatars.length)],cart:cart,pay:0};
+let total=cart.reduce((s,p)=>s+p.sell,0);let extra=[0,2000,5000,10000,20000];cust.pay=total+extra[Math.floor(Math.random()*extra.length)];state.queue.push(cust);
+let bubbles=["Mbak, totalnya berapa?","Buruan ya Mbak!","Ada kembalian gak Mbak?","Mbak Sinta cantik! 😍"];document.getElementById('bubble').textContent=bubbles[Math.floor(Math.random()*bubbles.length)];
+renderQueue();
+}
+function selectCust(id){state.currentCust=state.queue.find(c=>c.id===id);renderQueue();openPOS();}
+function openPOS(){
+if(!state.currentCust)return;document.getElementById('posModal').classList.remove('hidden');
+let list=document.getElementById('posList');let total=0;let html='';state.currentCust.cart.forEach(p=>{html+=`<div class="line"><span>${p.icon} ${p.name}</span><span>Rp ${p.sell.toLocaleString('id-ID')}</span></div>`;total+=p.sell;});
+state.total=total;document.getElementById('posTotal').textContent='Rp '+total.toLocaleString('id-ID');document.getElementById('custMoney').textContent='Rp '+state.currentCust.pay.toLocaleString('id-ID');document.getElementById('posPay').textContent='Rp 0';document.getElementById('posChange').textContent='Rp 0';list.innerHTML=html+`<div class="total"><span>TOTAL ${state.currentCust.cart.length} barang</span><span>Rp ${total.toLocaleString('id-ID')}</span></div>`;document.getElementById('payInput').value='';
+}
+function closePOS(){document.getElementById('posModal').classList.add('hidden');}
+function pressNum(n){let inp=document.getElementById('payInput');inp.value+=n;calcChange();}
+function pressDel(){let inp=document.getElementById('payInput');inp.value=inp.value.slice(0,-1);calcChange();}
+function calcChange(){let pay=parseInt(document.getElementById('payInput').value)||0;document.getElementById('posPay').textContent='Rp '+pay.toLocaleString('id-ID');let change=pay-state.total;document.getElementById('posChange').textContent='Rp '+change.toLocaleString('id-ID');document.getElementById('posChange').style.color=change<0?'#ef4444':'#facc15';}
+function doPay(){
+let pay=parseInt(document.getElementById('payInput').value)||0;
+if(pay<state.total){alert('Uang kurang! Minimal Rp '+state.total.toLocaleString('id-ID'));return;}
+for(let p of state.currentCust.cart){if((state.stock[p.id]||0)<=0){alert('Stok '+p.name+' habis! Kulakan dulu!');closePOS();openStock();return;}}
+state.currentCust.cart.forEach(p=>{state.stock[p.id]--;});
+let profit=state.total - state.currentCust.cart.reduce((s,p)=>s+p.buy,0);
+state.money+=state.total;state.served++;state.queue=state.queue.filter(c=>c.id!==state.currentCust.id);state.currentCust=null;
+document.getElementById('money').textContent=state.money.toLocaleString('id-ID');
+if(state.served>=state.target){nextDay();}else{spawnCust();}
+renderShelves();renderQueue();closePOS();
+document.getElementById('bubble').textContent=`Makasih! Untung Rp ${profit.toLocaleString('id-ID')} 💰`;
+}
+function nextDay(){state.day++;state.served=0;state.target=Math.min(25,15+state.day*2);document.getElementById('day').textContent=state.day;document.getElementById('target').textContent=state.target;document.getElementById('bubble').textContent=`Hari ${state.day}! Target ${state.target} pelanggan!`;state.queue=[];for(let i=0;i<3;i++)spawnCust();renderQueue();}
+function openStock(){renderStock();document.getElementById('stockModal').classList.remove('hidden');}
+function closeStock(){document.getElementById('stockModal').classList.add('hidden');}
+function renderStock(){let grid=document.getElementById('stockGrid');grid.innerHTML='';PRODUCTS.forEach(p=>{let s=state.stock[p.id]||0;let canBuy=state.money>=p.buy*5;let div=document.createElement('div');div.className='stockCard';div.innerHTML=`<div style="font-size:28px">${p.icon}</div><b>${p.name}</b><div style="font-size:11px;color:#64748b">Stok: ${s}</div><div style="font-size:11px;margin:4px 0">Beli: Rp ${p.buy.toLocaleString('id-ID')} → Jual: Rp ${p.sell.toLocaleString('id-ID')}<br><span style="color:#16a34a">Untung Rp ${(p.sell-p.buy).toLocaleString('id-ID')}</span></div><button class="btnBuy" ${!canBuy?'disabled':''} onclick="buyStock('${p.id}')">KULAKAN 5 PCS - Rp ${(p.buy*5).toLocaleString('id-ID')}</button>`;grid.appendChild(div);});}
+function buyStock(id){let p=PRODUCTS.find(x=>x.id===id);if(state.money<p.buy*5){alert('Uang tidak cukup!');return;}state.money-=p.buy*5;state.stock[id]=(state.stock[id]||0)+5;document.getElementById('money').textContent=state.money.toLocaleString('id-ID');renderStock();renderShelves();}
+function showReport(){let totalStock=Object.values(state.stock).reduce((a,b)=>a+b,0);alert(`📊 LAPORAN\\nHari: ${state.day}\\nUang: Rp ${state.money.toLocaleString('id-ID')}\\nStok: ${totalStock} pcs\\nLayani: ${state.served}/${state.target}\\nUntung: Rp ${(state.money-250000).toLocaleString('id-ID')}`);}
+function showProd(id){let p=PRODUCTS.find(x=>x.id===id);alert(`${p.icon} ${p.name}\\nStok: ${state.stock[id]}\\nBeli: Rp ${p.buy}\\nJual: Rp ${p.sell}\\nUntung: Rp ${p.sell-p.buy}`);}
+function startGame(){
+document.getElementById('menuStart').classList.add('hidden');
+initStock();renderShelves();
+for(let i=0;i<3;i++)setTimeout(spawnCust,i*800);
+setInterval(spawnCust,4000);
+}
+document.getElementById('payInput')?.addEventListener('input',calcChange);
+document.getElementById('posBtn').onclick=()=>{if(state.currentCust)openPOS();else alert('Pilih pelanggan di antrian dulu Tuan!');};
+</script>
+</body>
+</html>￼Enter

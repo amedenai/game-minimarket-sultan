@@ -2,180 +2,61 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Hacker Girls - Kamar Sultan</title>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Fredoka:wght@600;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hacker Girls - FIX</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Fredoka',sans-serif;background:#020617;color:#fff;overflow:hidden;touch-action:manipulation}
-#wrap{position:fixed;inset:0;display:flex;flex-direction:column;background:radial-gradient(ellipse at top,#1e1b4b 0%,#020617 60%)}
-#top{padding:8px 10px;display:flex;justify-content:space-between;background:rgba(2,6,23,.9);border-bottom:2px solid #a855f7;z-index:20}
-.stat{background:rgba(255,255,255,.08);border:1px solid rgba(168,85,247,.3);border-radius:12px;padding:4px 10px;font-size:11px;font-weight:800;display:flex;gap:5px}
-.stat b{color:#22d3ee}
-#room{flex:1;display:flex;overflow:hidden}
-#leftRoom{flex:1;position:relative;background:linear-gradient(180deg,rgba(30,27,75,.6),rgba(2,6,23,.9));display:flex;flex-direction:column}
-#bedroomBg{position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(168,85,247,.08) 0 2px,transparent 2px 40px);z-index:0}
-#deskArea{position:relative;flex:1;display:flex;align-items:end;justify-content:center;padding-bottom:20px;z-index:1}
-#desk{width:96%;max-width:720px;height:72%;background:linear-gradient(180deg,#1e293b,#0f172a);border-radius:20px 20px 8px 8px;border:3px solid #334155;box-shadow:0 -10px 40px rgba(168,85,247,.25),0 20px 60px rgba(0,0,0,.6);position:relative;display:flex;flex-direction:column;align-items:center;padding:10px}
-#deskTop{position:absolute;top:-8px;left:4%;right:4%;height:12px;background:linear-gradient(90deg,#a855f7,#22d3ee,#ec4899);border-radius:20px;box-shadow:0 0 20px rgba(168,85,247,.6);animation:rgb 3s linear infinite}
-@keyframes rgb{0%{filter:hue-rotate(0deg)}100%{filter:hue-rotate(360deg)}}
-#girl{position:absolute;bottom:62%;left:50%;transform:translateX(-50%);z-index:4;display:flex;flex-direction:column;align-items:center}
-.girlHead{font-size:68px;filter:drop-shadow(0 0 20px rgba(168,85,247,.6));animation:breathe 2.5s ease-in-out infinite}
-.girlLaptop{margin-top:-10px;font-size:42px}
-@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
-.bubble{position:absolute;bottom:110%;left:50%;transform:translateX(-50%);background:#fff;color:#0f172a;padding:8px 12px;border-radius:16px 16px 16px 2px;font-size:11px;font-weight:800;white-space:normal;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,.3);z-index:5;max-width:220px}
-#equipment{position:relative;width:100%;display:flex;justify-content:space-around;align-items:end;padding:8px 4px;gap:4px;z-index:3;flex-wrap:wrap}
-.eq{width:62px;height:62px;background:linear-gradient(180deg,#fff,rgba(241,245,249,.9));border-radius:16px;border:2px solid #fff;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 6px 0 #cbd5e1,0 10px 20px rgba(0,0,0,.25);cursor:pointer;position:relative}
-.eq:active{transform:translateY(4px);box-shadow:0 2px 0 #cbd5e1}
-.eq .ic{font-size:26px}
-.eq .lb{font-size:8px;font-weight:800;color:#0f172a;margin-top:2px}
-.eq.on{border-color:#22d3ee;box-shadow:0 0 0 3px rgba(34,211,238,.4),0 6px 0 #22d3ee;animation:glow 1.5s infinite}
-.eq.micOn{border-color:#ec4899;box-shadow:0 0 20px rgba(236,72,153,.6),0 6px 0 #ec4899}
-.eq.micOn .ic{animation:micPulse .8s infinite}
-@keyframes glow{0%,100%{box-shadow:0 0 0 3px rgba(34,211,238,.4),0 6px 0 #22d3ee}50%{box-shadow:0 0 20px rgba(34,211,238,.8),0 6px 0 #22d3ee}}
-@keyframes micPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-#rightPanel{width:320px;background:rgba(15,23,42,.92);border-left:3px solid #a855f7;display:flex;flex-direction:column;z-index:10}
-#panelHeader{padding:10px;background:linear-gradient(90deg,#7c3aed,#a855f7);display:flex;justify-content:space-between;align-items:center}
-#terminal{flex:1;background:#020617;border:2px solid #1e293b;border-radius:12px;margin:8px;padding:8px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#22d3ee;overflow-y:auto;line-height:1.4}
-.termLine{margin:2px 0}
-.termLine.ok{color:#22c55e}
-.termLine.warn{color:#facc15}
-.termLine.err{color:#ef4444}
-.termLine.sys{color:#a855f7}
-#typingArea{background:#0f172a;border:2px solid #334155;border-radius:14px;margin:0 8px 8px;padding:8px}
-#codeInput{width:100%;background:#020617;border:2px solid #a855f7;border-radius:10px;padding:10px;color:#fff;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;outline:none;box-shadow:0 0 0 4px rgba(168,85,247,.15) inset}
-.keys{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:8px}
-.keys button{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:8px;padding:8px 2px;font-weight:800;font-size:12px;font-family:'JetBrains Mono'}
-#actionRow{display:flex;gap:6px;padding:8px}
-.actBtn{flex:1;padding:10px;border-radius:12px;border:none;font-weight:800;font-size:11px;box-shadow:0 4px 0 rgba(0,0,0,.3)}
-.primary{background:linear-gradient(90deg,#a855f7,#ec4899);color:#fff}
-.secondary{background:#1e293b;color:#fff;border:2px solid #334155}
-#menuStart{position:fixed;inset:0;z-index:60;background:radial-gradient(ellipse at center,#1e1b4b,#020617);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;text-align:center;overflow-y:auto}
-.bigBtn{width:100%;max-width:360px;padding:14px;border-radius:16px;border:2px solid rgba(255,255,255,.2);font-weight:800;font-size:16px;margin:6px 0;box-shadow:0 6px 0 rgba(0,0,0,.4)}
-.pill{background:rgba(168,85,247,.2);border:1px solid rgba(168,85,247,.4);padding:6px 14px;border-radius:20px;font-size:11px;margin:4px}
-.missionList{width:100%;max-width:360px;background:rgba(255,255,255,.06);border:2px solid rgba(255,255,255,.1);border-radius:16px;padding:12px;margin:10px 0;text-align:left}
-.missionItem{padding:8px;border-radius:10px;background:rgba(255,255,255,.05);margin:6px 0;display:flex;gap:8px;align-items:center;font-size:12px}
-.missionItem .chk{width:22px;height:22px;border-radius:50%;border:2px solid #334155;display:flex;align-items:center;justify-content:center}
-#toast{position:fixed;left:50%;top:20%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 16px;border-radius:14px;font-weight:700;font-size:12px;z-index:80;border:2px solid #fff;display:none}
-#soundBtn{position:absolute;top:8px;right:8px;z-index:25;background:rgba(255,255,255,.9);border:2px solid #fff;border-radius:12px;padding:6px 10px;font-size:11px;font-weight:800}
-.hidden{display:none!important}
+body{margin:0;background:#020617;color:#fff;font-family:sans-serif;display:flex;flex-direction:column;height:100vh}
+#top{padding:10px;background:#7c3aed;display:flex;justify-content:space-between}
+#room{display:flex;flex:1}
+#left{flex:1;background:linear-gradient(#1e1b4b,#020617);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px;text-align:center}
+#right{width:320px;background:#0f172a;border-left:3px solid #a855f7;display:flex;flex-direction:column}
+#term{flex:1;background:#000;color:#0f0;padding:10px;font-family:monospace;font-size:12px;overflow:auto}
+input{width:100%;padding:12px;background:#000;border:2px solid #a855f7;color:#fff;border-radius:8px;font-family:monospace}
+button{padding:10px;margin:5px;border-radius:8px;border:none;font-weight:800}
+#girl{font-size:80px;animation:breathe 2s infinite}
+@keyframes breathe{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.eq{width:60px;height:60px;background:#fff;border-radius:12px;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;margin:4px;cursor:pointer;color:#000;font-weight:800;font-size:10px}
+.eq:active{transform:scale(.9)}
 </style>
 </head>
 <body>
-<div id="wrap">
-<div id="top">
-<div class="stat">💻 <b id="level">LVL 1 Hacker</b></div>
-<div class="stat">💰 Rp <b id="money">500.000</b></div>
-<div class="stat">⭐ <b id="xp">0 XP</b></div>
-<div class="stat" id="soundStat" onclick="toggleSound()" style="cursor:pointer">🔊</div>
-</div>
+<div id="top"><b>👩‍💻 HACKER GIRLS</b><span>💰 Rp 500k | ⭐ 0 XP</span><span id="snd" onclick="sound=!sound;this.textContent=sound?'🔊':'🔇'">🔊</span></div>
 <div id="room">
-<div id="leftRoom">
-<div id="bedroomBg"></div>
-<div id="deskArea">
-<div id="girl">
-<div class="bubble" id="bubble">Hai Tuan! Aku Luna! Kamar hacker ku lengkap! Ada laptop, HP, vas bunga, TV, mic!</div>
-<div class="girlHead">👩‍💻</div>
-<div class="girlLaptop">💻</div>
-<div style="font-size:9px;background:#fff;color:#0f172a;padding:2px 8px;border-radius:20px;font-weight:800;border:2px solid #a855f7;margin-top:4px">LUNA • HACKER GIRLS</div>
+<div id="left">
+<div id="girl">👩‍💻</div>
+<div style="background:#fff;color:#000;padding:8px 12px;border-radius:12px;font-size:12px;max-width:250px;margin:10px" id="bubble">Hai Tuan! Aku Luna! Klik peralatan di bawah!</div>
+<div style="background:#1e293b;padding:10px;border-radius:12px;width:95%;margin-top:10px">
+<div style="font-size:11px;color:#a855f7;margin-bottom:6px">💜 PERALATAN KAMAR (KLIK!)</div>
+<div class="eq" onclick="klik('laptop')">💻<br>LAPTOP</div>
+<div class="eq" onclick="klik('hp')">📱<br>HP</div>
+<div class="eq" onclick="klik('mic')">🎙️<br>MIC</div>
+<div class="eq" onclick="klik('vas')">🌸<br>VAS BUNGA</div>
+<div class="eq" onclick="klik('tv')">📺<br>TV</div>
+<div class="eq" onclick="klik('key')">⌨️<br>KEYBOARD</div>
 </div>
-<div id="desk">
-<div id="deskTop"></div>
-<div style="margin-top:8px;font-size:10px;color:#64748b;font-weight:800;letter-spacing:2px">💜 HACKER DESK • RGB ON • MIC ON AIR 🔴</div>
-<div id="equipment">
-<div class="eq on" id="eqLaptop" onclick="clickEq('laptop')"><div class="ic">💻</div><div class="lb">LAPTOP</div></div>
-<div class="eq" id="eqPhone" onclick="clickEq('phone')"><div class="ic">📱</div><div class="lb">HP</div></div>
-<div class="eq" id="eqMic" onclick="clickEq('mic')"><div class="ic">🎙️</div><div class="lb">MIC</div></div>
-<div class="eq" id="eqVase" onclick="clickEq('vase')"><div class="ic">🌸</div><div class="lb">VAS BUNGA</div></div>
-<div class="eq" id="eqTV" onclick="clickEq('tv')"><div class="ic">📺</div><div class="lb">TV</div></div>
-<div class="eq" id="eqKB" onclick="clickEq('keyboard')"><div class="ic">⌨️</div><div class="lb">KEYBOARD RGB</div></div>
-<div class="eq" id="eqCam" onclick="clickEq('cam')"><div class="ic">📹</div><div class="lb">WEBCAM</div></div>
-<div class="eq" id="eqHead" onclick="clickEq('headset')"><div class="ic">🎧</div><div class="lb">HEADSET</div></div>
+<div style="margin-top:10px;font-size:10px;color:#64748b">⌨️ Ada suara tik-tik + 🎙️ suara mic ON!</div>
 </div>
+<div id="right">
+<div id="term">> Terminal Luna siap...<br>> Ketik "hack wifi" dan ENTER</div>
+<div style="padding:8px"><input id="inp" placeholder="Ketik: hack wifi" onkeydown="if(event.key==='Enter')hack()"><div style="display:flex;margin-top:6px"><button onclick="hint()" style="flex:1;background:#334155;color:#fff">💡 HINT</button><button onclick="hack()" style="flex:2;background:#a855f7;color:#fff">▶️ HACK!</button></div></div>
 </div>
-</div>
-</div>
-<div id="rightPanel">
-<div id="panelHeader"><h3 style="font-size:13px">💻 TERMINAL LUNA</h3><button onclick="clearTerm()" style="background:rgba(255,255,255,.2);border:none;color:#fff;padding:4px 8px;border-radius:8px;font-size:10px">Clear</button></div>
-<div id="terminal"></div>
-<div id="typingArea">
-<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:6px;color:#94a3b8"><span>MISSION: <b id="missionName" style="color:#fff">Hack WiFi</b></span><span id="missionProgress">0/5</span></div>
-<input id="codeInput" placeholder="Ketik kode... contoh: hack wifi" autocomplete="off">
-<div class="keys" id="keys"></div>
-</div>
-<div id="actionRow">
-<button class="actBtn secondary" onclick="useHint()">💡 HINT</button>
-<button class="actBtn primary" onclick="executeCode()">▶️ HACK!</button>
-</div>
-</div>
-</div>
-</div>
-<div id="menuStart">
-<div style="font-size:56px">👩‍💻💜🌸</div>
-<h1 style="font-size:28px;line-height:1;margin:6px 0;color:#fff">HACKER GIRLS<br><span style="color:#22d3ee">KAMAR SULTAN</span></h1>
-<div class="pill">⌨️ Suara Ketikan • 🎙️ Mic ON • 💻 Kamar RGB • 🌸 Vas Bunga • 📱 HP • 📺 TV</div>
-<div class="missionList">
-<b style="font-size:13px;color:#a855f7">🎯 FITUR LENGKAP:</b>
-<div class="missionItem"><div class="chk">💻</div><div><b>Laptop</b> - Depan muka Luna</div></div>
-<div class="missionItem"><div class="chk">📱</div><div><b>HP</b> - Notif WA</div></div>
-<div class="missionItem"><div class="chk">🌸</div><div><b>Vas Bunga</b> - +10 XP</div></div>
-<div class="missionItem"><div class="chk">📺</div><div><b>TV Monitor</b></div></div>
-<div class="missionItem"><div class="chk">🎙️</div><div><b>Mic</b> - ON/OFF + suara</div></div>
-<div class="missionItem"><div class="chk">⌨️</div><div><b>Keyboard RGB</b> - tik-tik</div></div>
-</div>
-<button class="bigBtn primary" onclick="startGame()" style="background:linear-gradient(90deg,#a855f7,#ec4899);color:#fff;border-color:#fff">▶️ MASUK KAMAR LUNA!</button>
 </div>
 <script>
-const MISSIONS=[{code:'hack wifi',name:'Hack WiFi Tetangga',xp:100,msg:'Mencoba bobol WiFi...',success:'✅ WiFi berhasil! Password: sultan123'},{code:'sudo access',name:'Akses Root',xp:150,msg:'Mencoba sudo...',success:'✅ Root access granted!'},{code:'buka file',name:'Buka File Rahasia',xp:120,msg:'Membuka secret.txt...',success:'✅ File terbuka! Foto Luna & kucing!'},{code:'trace ip',name:'Lacak IP',xp:200,msg:'Tracing IP...',success:'✅ IP ditemukan di Jakarta!'},{code:'mic on',name:'Nyalakan Mic',xp:80,msg:'Menyalakan mic...',success:'🔴 MIC ON AIR! Halo guys!'},{code:'cat foto',name:'Upload Foto',xp:90,msg:'Upload foto vas bunga...',success:'✅ Foto terupload! 1k likes!'},{code:'nonton tv',name:'Nonton Tutorial di TV',xp:70,msg:'Memutar TV...',success:'📺 Video: Cara jadi hacker cantik!'},{code:'chat wa',name:'Balas WA',xp:60,msg:'Buka HP...',success:'📱 WA dibalas: Oke bos!'}];
-let state={money:500000,level:1,xp:0,missionIdx:0,micOn:false,sound:true,audioCtx:null,completed:0};
-let term=null;
-function initAudio(){if(state.audioCtx)return;state.audioCtx=new(window.AudioContext||window.webkitAudioContext)();}
-function playType(){if(!state.sound)return;initAudio();let o=state.audioCtx.createOscillator(),g=state.audioCtx.createGain();o.type='square';o.frequency.value=800+Math.random()*600;g.gain.setValueAtTime(0.15,state.audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,state.audioCtx.currentTime+0.05);o.connect(g);g.connect(state.audioCtx.destination);o.start();o.stop(state.audioCtx.currentTime+0.06);}
-function playMicOn(){if(!state.sound)return;initAudio();[600,900,1200].forEach((f,i)=>{let o=state.audioCtx.createOscillator(),g=state.audioCtx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.25,state.audioCtx.currentTime+i*0.12);g.gain.exponentialRampToValueAtTime(0.001,state.audioCtx.currentTime+i*0.12+0.25);o.connect(g);g.connect(state.audioCtx.destination);o.start(state.audioCtx.currentTime+i*0.12);o.stop(state.audioCtx.currentTime+i*0.12+0.3);});}
-function playSuccess(){if(!state.sound)return;initAudio();[523,659,784,1046].forEach((f,i)=>{let o=state.audioCtx.createOscillator(),g=state.audioCtx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.25,state.audioCtx.currentTime+i*0.1);g.gain.exponentialRampToValueAtTime(0.001,state.audioCtx.currentTime+i*0.1+0.4);o.connect(g);g.connect(state.audioCtx.destination);o.start(state.audioCtx.currentTime+i*0.1);o.stop(state.audioCtx.currentTime+i*0.1+0.4);});}
-function playError(){if(!state.sound)return;initAudio();let o=state.audioCtx.createOscillator(),g=state.audioCtx.createGain();o.frequency.value=200;o.type='sawtooth';g.gain.setValueAtTime(0.3,state.audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,state.audioCtx.currentTime+0.3);o.connect(g);g.connect(state.audioCtx.destination);o.start();o.stop(state.audioCtx.currentTime+0.3);}
-function toggleSound(){state.sound=!state.sound;document.getElementById('soundStat').textContent=state.sound?'🔊':'🔇';if(state.sound)playType();}
-function log(msg,cls=''){let div=document.createElement('div');div.className='termLine '+cls;div.textContent='> '+msg;term.appendChild(div);term.scrollTop=term.scrollHeight;}
-function clearTerm(){term.innerHTML='';log('Terminal Luna siap...','sys');log('Ketik "help" untuk bantuan','sys');}
-function clickEq(type){
-let bubble=document.getElementById('bubble');
-if(type==='laptop'){bubble.textContent='💻 Laptop spek dewa! RTX 4090! Lagi ngeretas nih!';log('💻 Laptop: CPU 78% • RTX ON','ok');}
-if(type==='phone'){bubble.textContent='📱 HP bunyi! WA: "Luna, hack IG mantan dong!" 😂';log('📱 HP: 3 notif WA • Baterai 87%','warn');playType();}
-if(type==='mic'){state.micOn=!state.micOn;let mic=document.getElementById('eqMic');if(state.micOn){mic.classList.add('micOn');bubble.textContent='🎙️ MIC ON AIR! 🔴 Halo guys, welcome to hacker stream!';log('🔴 MIC ON AIR - Recording...','ok');playMicOn();}else{mic.classList.remove('micOn');bubble.textContent='🎙️ Mic OFF! Mode silent hacker!';log('⚫ MIC OFF','warn');}}
-if(type==='vase'){bubble.textContent='🌸 Vas bunga sakura! Bikin semangat +10 XP!';log('🌸 Vas Bunga: Sakura pink • +10 XP','ok');state.xp+=10;updateXP();playSuccess();}
-if(type==='tv'){bubble.textContent='📺 TV jadi monitor kedua! Nampilin log hack & anime!';log('📺 TV: HDMI 2 - 4K - Matrix code','sys');}
-if(type==='keyboard'){bubble.textContent='⌨️ Keyboard RGB! Bunyi tik-tik satisfying!';for(let i=0;i<8;i++)setTimeout(playType,i*60);}
-if(type==='cam'){bubble.textContent='📹 Webcam Live! 2k viewers!';log('📹 Webcam: ON - 2.1k viewers','warn');}
-if(type==='headset'){bubble.textContent='🎧 Headset RGB! Lo-fi beats!';log('🎧 Headset: Razer RGB ON','sys');}
+let sound=true,xp=0,ctx;
+function init(){try{ctx=new (window.AudioContext||window.webkitAudioContext)()}catch(e){}}
+function beep(f,t){if(!sound||!ctx)return;let o=ctx.createOscillator(),g=ctx.createGain();o.frequency.value=f;g.gain.setValueAtTime(0.2,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+t);o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+t)}
+function klik(type){init();beep(800,0.1);let b=document.getElementById('bubble');let trm=document.getElementById('term');
+if(type==='laptop'){b.textContent='💻 Laptop RTX 4090! Lagi ngehack!';trm.innerHTML+='<br>> 💻 Laptop: RTX ON • CPU 78%';}
+if(type==='hp'){b.textContent='📱 HP: WA "Luna hack IG mantan dong!" 😂';trm.innerHTML+='<br>> 📱 HP: 3 notif WA • 5G';}
+if(type==='mic'){beep(600,0.2);setTimeout(()=>beep(900,0.2),100);setTimeout(()=>beep(1200,0.2),200);b.textContent='🎙️ MIC ON AIR 🔴 Halo guys!';trm.innerHTML+='<br>> 🔴 MIC ON AIR - Recording...';}
+if(type==='vas'){b.textContent='🌸 Vas bunga sakura +10 XP semangat!';xp+=10;trm.innerHTML+='<br>> 🌸 Vas bunga +10 XP!';beep(523,0.3);setTimeout(()=>beep(659,0.3),100);setTimeout(()=>beep(784,0.3),200);}
+if(type==='tv'){b.textContent='📺 TV jadi monitor kedua!';trm.innerHTML+='<br>> 📺 TV: Matrix code playing';}
+if(type==='key'){for(let i=0;i<6;i++)setTimeout(()=>beep(800+Math.random()*400,0.06),i*50);b.textContent='⌨️ Keyboard RGB tik-tik-tik!';trm.innerHTML+='<br>> ⌨️ Keyboard: tik-tik-tik!';}
+trm.scrollTop=trm.scrollHeight;
 }
-function updateXP(){document.getElementById('xp').textContent=state.xp+' XP';document.getElementById('level').textContent='LVL '+Math.floor(state.xp/300+1)+' Hacker';}
-function useHint(){if(state.money<25000){log('💸 Uang tidak cukup!','err');return;}state.money-=25000;document.getElementById('money').textContent=state.money.toLocaleString('id-ID');let m=MISSIONS[state.missionIdx];log(`💡 HINT: Ketik "${m.code}"`,'warn');}
-function executeCode(){
-let input=document.getElementById('codeInput');let code=input.value.toLowerCase().trim();
-if(!code){log('Ketik kode dulu!','err');return;}
-log(code,'');
-if(code==='help'){log('Daftar kode:','sys');MISSIONS.forEach(m=>log(`- ${m.code} : ${m.name}`,'sys'));input.value='';return;}
-if(code==='clear'){clearTerm();input.value='';return;}
-let mission=MISSIONS[state.missionIdx];
-if(code===mission.code){
-log(mission.msg,'sys');
-setTimeout(()=>{log(mission.success,'ok');state.xp+=mission.xp;state.money+=mission.xp*1000;state.completed++;updateXP();document.getElementById('money').textContent=state.money.toLocaleString('id-ID');document.getElementById('missionProgress').textContent=state.completed+'/5';playSuccess();document.getElementById('bubble').textContent=`🎉 Berhasil! ${mission.success} +${mission.xp} XP!`;state.missionIdx=(state.missionIdx+1)%MISSIONS.length;let next=MISSIONS[state.missionIdx];document.getElementById('missionName').textContent=next.name;if(state.completed>=5){log('🏆 SELAMAT! Hacker Girls Sultan!','ok');}},600);
-}else{log('❌ Kode salah! Pakai HINT!','err');playError();}
-input.value='';
-}
-function startGame(){
-document.getElementById('menuStart').classList.add('hidden');
-term=document.getElementById('terminal');
-clearTerm();
-let m=MISSIONS[0];
-document.getElementById('missionName').textContent=m.name;
-let keys=document.getElementById('keys');
-'abcdefghijklmnopqrstuvwxyz'.split('').forEach(k=>{let b=document.createElement('button');b.textContent=k;b.onclick=()=>{document.getElementById('codeInput').value+=k;playType();};keys.appendChild(b);});
-[' space ',' del '].forEach(k=>{let b=document.createElement('button');b.textContent=k;b.style.gridColumn='span 3';b.style.background='#1e293b';b.onclick=()=>{if(k.includes('space')){document.getElementById('codeInput').value+=' ';}else{document.getElementById('codeInput').value=document.getElementById('codeInput').value.slice(0,-1);}playType();};keys.appendChild(b);});
-document.getElementById('codeInput').addEventListener('keydown',(e)=>{if(e.key!=='Enter')setTimeout(playType,10);if(e.key==='Enter')executeCode();});
-initAudio();
-log('Kamar Luna siap! Klik peralatan!','sys');
-}
+function hack(){let i=document.getElementById('inp');let v=i.value.toLowerCase().trim();let trm=document.getElementById('term');if(!v)return;trm.innerHTML+='<br>> '+v;if(v.includes('hack wifi')||v.includes('hack')||v.includes('sudo')){trm.innerHTML+='<br>> ✅ HACK BERHASIL! +100 XP!';beep(523,0.3);setTimeout(()=>beep(784,0.3),100);setTimeout(()=>beep(1046,0.4),200);xp+=100;document.getElementById('bubble').textContent='🎉 Berhasil hack! Kamu hebat Tuan!';}else{trm.innerHTML+='<br>> ❌ Salah! Coba ketik "hack wifi"';beep(200,0.3);}i.value='';trm.scrollTop=trm.scrollHeight;}
+function hint(){let trm=document.getElementById('term');trm.innerHTML+='<br>> 💡 HINT: Ketik "hack wifi"';}
+init();
 </script>
 </body>
-</html>￼Enter
+</html>
